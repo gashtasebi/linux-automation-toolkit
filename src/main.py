@@ -6,6 +6,18 @@ from src.network_info import get_active_interfaces, get_network_interfaces
 from src.process_info import get_process_count, get_process_info
 from src.system_monitor import get_system_info
 
+def run_command(command: str) -> None:
+    """Run the selected command."""
+    if command == "system":
+        show_system_info()
+
+    elif command == "processes":
+        show_process_info()
+
+    elif command == "network":
+        show_network_info()
+
+
 def show_system_info() -> None:
     """Display system information"""
     info = get_system_info()
@@ -50,16 +62,7 @@ def main() -> None:
     )
 
     args = parser.parse_args()
-
-    if args.command == "system":
-        show_system_info()
-
-    elif args.command == "processes":
-        show_process_info()
-
-    elif args.command == "network":
-        show_network_info()
-
+    run_command(args.command)
 
 if __name__ == "__main__":
     main()
