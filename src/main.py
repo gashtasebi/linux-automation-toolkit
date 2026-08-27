@@ -60,6 +60,12 @@ def main() -> None:
     )
 
     parser.add_argument(
+        "--version",
+        action= "version",
+        version= "Linux Automation Toolkit 0.1.0",
+    )
+
+    parser.add_argument(
         "command",
         choices = ["system", "processes", "network", "file"],
         help = "Information to display",
