@@ -6,17 +6,6 @@ from src.network_info import get_active_interfaces, get_network_interfaces
 from src.process_info import get_process_count, get_process_info
 from src.system_monitor import get_system_info
 
-def run_command(command: str) -> None:
-    """Run the selected command."""
-    if command == "system":
-        show_system_info()
-
-    elif command == "processes":
-        show_process_info()
-
-    elif command == "network":
-        show_network_info()
-
 
 def show_system_info() -> None:
     """Display system information"""
@@ -48,6 +37,21 @@ def show_network_info() -> None:
     print(f'\nInterface: {interface["name"]}')
     print(f"status: {status}")
 
+    for address in interface["addresses"]:
+        print(f"Address: {address}")
+
+
+def run_command(command: str) -> None:
+    """Run the selected command."""
+    if command == "system":
+        show_system_info()
+
+    elif command == "processes":
+        show_process_info()
+
+    elif command == "network":
+        show_network_info()
+
 
 def main() -> None:
     """Run the command-line interface."""
@@ -57,12 +61,27 @@ def main() -> None:
 
     parser.add_argument(
         "command",
-        choices = ["system", "processes", "network"],
+        choices = ["system", "processes", "network", "file"],
         help = "Information to display",
     )
 
+    parser.add_argument(
+        "path",
+        nargs= "?",
+        help= "path to a file or directory",
+    )
+
     args = parser.parse_args()
-    run_command(args.command)
+
+    if args.command == "file":
+        if args.path is None:
+            parser.error("The 'file' command requires a path.")
+
+        info = get_path_info(args.path)
+        print_path_info(info)
+    else:
+         run_command(args.command)
+
 
 if __name__ == "__main__":
     main()
