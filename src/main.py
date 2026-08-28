@@ -98,15 +98,15 @@ def main() -> None:
 
         logging.info("Inspecting path: %s, args.path")
 
-    try:
+        try:
 
-        info = get_path_info(args.path)
-        print_path_info(info)
+            info = get_path_info(args.path)
+            print_path_info(info)
 
-    except FileNotFoundError:
+        except FileNotFoundError:
 
-        logging.error("path not found: %s", args.path)
-        parser.error(f"Path not found: {args.path}")
+            logging.error("path not found: %s", args.path)
+            parser.error(f"Path not found: {args.path}")
 
     else:
          run_command(args.command)
