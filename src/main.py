@@ -1,6 +1,7 @@
 import argparse
 import logging
 
+from src.config import APP_NAME, APP_VERSION
 from src.file_info import get_path_info, print_path_info
 from src.network_info import get_active_interfaces, get_network_interfaces
 from src.process_info import get_process_count, get_process_info
@@ -68,13 +69,13 @@ def main() -> None:
     logging.info("Linux Automation Toolkit started")
 
     parser = argparse.ArgumentParser(
-        description = "Linux Automation Toolkit"
+        description = APP_NAME
     )
 
     parser.add_argument(
         "--version",
         action= "version",
-        version= "Linux Automation Toolkit 0.1.0",
+        version= f"{APP_NAME} {APP_VERSION}",
     )
 
     parser.add_argument(
