@@ -1,5 +1,5 @@
 import argparse
-
+import logging
 
 from src.file_info import get_path_info, print_path_info
 from src.network_info import get_active_interfaces, get_network_interfaces
@@ -43,6 +43,8 @@ def show_network_info() -> None:
 
 def run_command(command: str) -> None:
     """Run the selected command."""
+    logging.info("Excuting command: %s", command)
+
     if command == "system":
         show_system_info()
 
@@ -52,9 +54,19 @@ def run_command(command: str) -> None:
     elif command == "network":
         show_network_info()
 
+def configure_logging() -> None:
+    """Configure application logging."""
+    logging.basicConfig(
+        level= logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
 
 def main() -> None:
     """Run the command-line interface."""
+    configure_logging()
+
+    logging.info("Linux Automation Toolkit started")
+
     parser = argparse.ArgumentParser(
         description = "Linux Automation Toolkit"
     )
@@ -82,6 +94,8 @@ def main() -> None:
     if args.command == "file":
         if args.path is None:
             parser.error("The 'file' command requires a path.")
+
+        logging.info("Inspecting path: %s, args.path")
 
         info = get_path_info(args.path)
         print_path_info(info)
